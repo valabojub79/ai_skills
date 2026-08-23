@@ -4,6 +4,7 @@
 import { ICON_NAMES } from './build-html.mjs';
 
 const TEMPLATES = ['flow', 'ladder', 'comparison', 'roadmap', 'poster', 'dataflow'];
+const SIZE_NAMES = ['instagram-post', 'instagram-story', 'pinterest', 'twitter', 'linkedin', 'facebook', 'a4', 'letter', 'blog', 'landing'];
 const PRESET_NAMES = ['discord', 'slack', 'twitter', 'web', 'hq'];
 const FORMAT_NAMES = ['gif', 'apng', 'png', 'jpg', 'jpeg'];
 const COLOR_TOKENS = ['accent', 'accent2', 'accent3'];
@@ -51,6 +52,11 @@ export function validateSpec(spec) {
   }
   if (o.animation && !['reveal', 'motion'].includes(o.animation))
     E(`output.animation "${o.animation}" is not valid (reveal | motion)`);
+
+  if (spec.size && !SIZE_NAMES.includes(spec.size)) {
+    const s = closest(spec.size, SIZE_NAMES);
+    E(`size "${spec.size}" is not valid${s ? ` — did you mean "${s}"?` : ''} (one of: ${SIZE_NAMES.join(', ')})`);
+  }
 
   for (const k of ['accent', 'accent2', 'accent3', 'bg', 'text', 'muted', 'card', 'line']) {
     const v = spec.theme && spec.theme[k];

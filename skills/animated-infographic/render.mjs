@@ -9,12 +9,19 @@ import { encodeGif, encodeApng, encodePng, encodeJpeg } from './lib/encode.mjs';
 import { resolveBinaries, encodeGifFFmpeg, fitToBudget, gifsicleOptimize, PRESETS } from './lib/encode-ffmpeg.mjs';
 import { validateSpec } from './lib/validate.mjs';
 
+// Named canvas sizes (platform-ready). Borrowed from common infographic presets.
+const SIZES = {
+  'instagram-post': [1080, 1080], 'instagram-story': [1080, 1920], 'pinterest': [1000, 1500],
+  'twitter': [1200, 675], 'linkedin': [1200, 627], 'facebook': [1200, 630],
+  'a4': [2480, 3508], 'letter': [2550, 3300], 'blog': [800, 1000], 'landing': [1200, 900],
+};
+
 const VALUE_FLAGS = {
   '--out': 'out', '--name': 'name',
   '--preset': 'preset', '--format': 'format', '--formats': 'format',
   '--animation': 'animation', '--lossy': 'lossy', '--fps': 'fps',
   '--colors': 'colors', '--gif-scale': 'gifScale', '--duration': 'duration',
-  '--width': 'width', '--height': 'height', '--raw-html': 'rawHtml',
+  '--width': 'width', '--height': 'height', '--size': 'size', '--raw-html': 'rawHtml',
 };
 function parseArgs(argv) {
   const a = { _: [] };
@@ -40,6 +47,10 @@ function applyOverrides(spec, args) {
   if (args.colors) o.colors = Number(args.colors);
   if (args.gifScale) o.gifScale = Number(args.gifScale);
   if (args.duration) o.durationSec = Number(args.duration);
+  // named size preset sets canvas dims (explicit width/height still win)
+  if (args.size) spec.size = args.size;
+  const sz = SIZES[spec.size];
+  if (sz) { if (spec.width == null) spec.width = sz[0]; if (spec.height == null) spec.height = sz[1]; }
   if (args.width) spec.width = Number(args.width);
   if (args.height) spec.height = Number(args.height);
 }
@@ -56,8 +67,10 @@ async function main() {
   let spec, rawHtml = null;
   if (args.rawHtml) {
     rawHtml = await readFile(resolve(args.rawHtml), 'utf8');
-    spec = { width: 960, height: 1100, output: {} };
+    spec = { output: {} };
     applyOverrides(spec, args);
+    spec.width = spec.width || 960;
+    spec.height = spec.height || 1100;
     if (!spec.output.animation) spec.output.animation = 'motion';
   } else {
     const specPath = args._[0];

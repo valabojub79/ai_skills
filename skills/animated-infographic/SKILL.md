@@ -26,6 +26,15 @@ Check whether `node_modules/` already exists before running it. If `npm install`
 Chromium, run `npx puppeteer browsers install chrome` in the same dir.
 
 ## Workflow
+0. **Design brief first (the art-director pass).** Before writing the spec, decide the plan — scale it
+   to the ask (one line for a simple request, the full set for a dense/data piece):
+   - **Audience** and **one primary message** (if you can't state it in a sentence, the infographic is
+     doing too much — cut).
+   - **Which template** fits the *structure* of that message (see the list below), and the **visual
+     hierarchy** — what the eye should hit first, second, third.
+   - **Copy discipline:** lead with the highest-impact fact, round numbers, keep labels 1–4 words and
+     notes to one line. Cite a **`source`** for any data/claim (credibility).
+   Optionally record these decisions in a `brief` block in the spec so they travel with the file.
 1. **Get the content.** Ask for / read the topic and the key points (or a doc the user points to).
    Keep labels short (1–4 words) and notes to one line — infographics are scannable, not paragraphs.
 2. **Pick a template** that matches the structure of the content:
@@ -61,6 +70,9 @@ Chromium, run `npx puppeteer browsers install chrome` in the same dir.
 {
   "template": "flow | ladder | comparison",
   "width": 800, "height": 1000,                  // portrait carousel by default
+  "size": "linkedin",                                         // optional named canvas size (see list) — sets width/height
+  "source": "kernel.org · block/mq-deadline.c",               // optional citation line rendered small at the bottom
+  "brief": { "audience": "...", "oneMessage": "...", "hierarchy": ["...","..."] },  // optional — planning notes, not rendered
   "eyebrow": "SECTION LABEL",                                 // optional small tracked label above title
   "title": "Main headline",
   "titleHtml": "Use <span class=\"hl\">accent</span> words",  // optional; overrides title, allows highlight
@@ -112,8 +124,20 @@ Chromium, run `npx puppeteer browsers install chrome` in the same dir.
 ## CLI flags (override the spec without editing JSON)
 `render.mjs <spec.json>` accepts: `--out DIR`, `--name SLUG`, `--preset discord|slack|twitter|web|hq`,
 `--format gif,png`, `--animation reveal|motion`, `--lossy N`, `--fps N`, `--colors N`,
-`--gif-scale F`, `--duration SEC`, `--width N`, `--height N`, `--html`, `--no-validate`. Flags win over `output`.
+`--gif-scale F`, `--duration SEC`, `--width N`, `--height N`, `--size NAME`, `--html`, `--no-validate`. Flags win over `output`.
 Example: `node render.mjs spec.json --out ./out --preset discord --format gif`.
+
+## Size presets (platform-ready canvases)
+Set `"size"` in the spec or `--size NAME` to size the canvas for a platform (explicit `width`/`height`
+still win): `instagram-post` 1080×1080 · `instagram-story` 1080×1920 · `pinterest` 1000×1500 ·
+`twitter` 1200×675 · `linkedin` 1200×627 · `facebook` 1200×630 · `a4` 2480×3508 · `letter` 2550×3300 ·
+`blog` 800×1000 · `landing` 1200×900. (Static PNG/JPEG render at 2× these dims; print sizes make large GIFs.)
+
+## Copy & credibility (bake into the brief)
+One primary message per graphic. Lead with the highest-impact fact; round numbers. Labels 1–4 words,
+notes one line. Add a `source` for any data/claim — it renders as a small "Source: …" line at the
+bottom and makes technical/data graphics look credible. Vary the `theme` accent per topic (don't
+default to purple-on-white).
 
 ## Raw-HTML mode (scripted explainer / walkthrough animations)
 For animations that *teach a mechanism* (moving tokens, step-by-step simulation) rather than present

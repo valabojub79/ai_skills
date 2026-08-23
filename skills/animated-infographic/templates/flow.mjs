@@ -60,6 +60,9 @@ export function renderHeader(spec, esc) {
 }
 
 export function renderFooter(spec, esc) {
-  if (!spec.footer) return '';
-  return `<div class="ig-footer reveal" data-from="up">${_icon('sparkles')}<span>${esc(spec.footer)}</span></div>`;
+  const bar = spec.footer
+    ? `<div class="ig-footer reveal" data-from="up">${_icon('sparkles')}<span>${esc(spec.footer)}</span></div>` : '';
+  const src = spec.source
+    ? `<div class="ig-source reveal" data-from="fade"><b>Source:</b> ${esc(spec.source)}</div>` : '';
+  return bar + src;
 }
