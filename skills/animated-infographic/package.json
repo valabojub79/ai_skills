@@ -1,0 +1,22 @@
+{
+  "name": "animated-infographic",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Render content/data into animated GIF / APNG / static PNG/JPEG infographics via headless Chromium.",
+  "bin": {
+    "animated-infographic": "render.mjs"
+  },
+  "scripts": {
+    "render": "node render.mjs",
+    "demo": "node render.mjs examples/sample-spec.json --out ./out"
+  },
+  "dependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "gifenc": "^1.0.3",
+    "gifsicle": "^7.0.1",
+    "puppeteer": "^25.1.0",
+    "sharp": "^0.35.1",
+    "upng-js": "^2.1.0"
+  }
+}

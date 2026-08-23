@@ -1,0 +1,150 @@
+/* base.css — shared design system for all animated-infographic templates.
+   Aesthetic: refined editorial-tech. Distinctive display type, layered depth,
+   filled icon badges, atmospheric background. Theme vars injected by build-html.mjs. */
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --accent:  #EA580C;
+  --accent2: #16A34A;
+  --accent3: #2563EB;
+  --bg:      #f6f7fb;
+  --card:    #ffffff;
+  --text:    #10172a;
+  --muted:   #667085;
+  --line:    #e6e9f0;
+  --radius:  18px;
+  --pad:     44px;
+
+  --shadow-sm: 0 1px 2px rgba(16,24,40,.05), 0 2px 6px rgba(16,24,40,.06);
+  --shadow-md: 0 6px 16px rgba(16,24,40,.08), 0 2px 5px rgba(16,24,40,.05);
+  --shadow-lg: 0 18px 40px rgba(16,24,40,.12), 0 6px 14px rgba(16,24,40,.07);
+
+  --font-display: 'Bricolage Grotesque', 'Hanken Grotesk', system-ui, sans-serif;
+  --font-body: 'Hanken Grotesk', system-ui, -apple-system, sans-serif;
+}
+
+html, body {
+  width: 100%; height: 100%;
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* atmospheric background: soft tint wash + faint dot grid */
+#stage {
+  position: relative;
+  width: 100%; height: 100%;
+  padding: var(--pad);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 80% at 100% 0%, color-mix(in srgb, var(--accent) 9%, transparent) 0%, transparent 42%),
+    radial-gradient(110% 75% at 0% 100%, color-mix(in srgb, var(--accent3) 8%, transparent) 0%, transparent 45%),
+    var(--bg);
+}
+#stage::before {
+  content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background-image: radial-gradient(circle at 1px 1px, rgba(16,24,40,.05) 1px, transparent 0);
+  background-size: 22px 22px;
+  -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,.5), rgba(0,0,0,.12));
+          mask-image: linear-gradient(180deg, rgba(0,0,0,.5), rgba(0,0,0,.12));
+}
+#stage > * { position: relative; z-index: 1; }
+
+/* ---------- Header ---------- */
+.ig-header { margin-bottom: 24px; }
+.ig-eyebrow {
+  display: inline-block; font-weight: 800; font-size: 12.5px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  padding: 6px 12px; border-radius: 8px; margin-bottom: 14px;
+}
+.ig-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 50px;
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+}
+.ig-title .hl {
+  color: var(--accent);
+  background: linear-gradient(180deg, transparent 62%, color-mix(in srgb, var(--accent) 22%, transparent) 62%);
+}
+.ig-subtitle {
+  margin-top: 12px;
+  font-weight: 500;
+  font-size: 20px;
+  color: var(--muted);
+  line-height: 1.28;
+  max-width: 92%;
+}
+.ig-author { margin-top: 12px; font-size: 13.5px; color: var(--muted); font-weight: 600; }
+.ig-rule { height: 5px; width: 64px; background: var(--accent); margin-top: 18px; border-radius: 999px; }
+
+/* ---------- Body / footer ---------- */
+.ig-body { flex: 1 1 auto; display: flex; flex-direction: column; gap: 18px; min-height: 0; }
+.ig-footer {
+  margin-top: 20px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  background: linear-gradient(100deg, var(--accent), color-mix(in srgb, var(--accent) 60%, var(--accent3)));
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  padding: 16px 22px;
+  border-radius: 14px;
+  box-shadow: var(--shadow-md);
+}
+.ig-footer .icon { width: 20px; height: 20px; color: #fff; }
+
+/* ---------- Reusable pieces ---------- */
+.pill {
+  display: inline-block;
+  font-family: var(--font-display);
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  font-size: 18px;
+  padding: 9px 18px;
+  border-radius: 999px;
+  box-shadow: var(--shadow-sm);
+}
+.icon { width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center; }
+.icon svg { width: 100%; height: 100%; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* filled, tinted icon badge — the professional alternative to bare line icons */
+.ibadge {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; border-radius: 11px;
+  background: color-mix(in srgb, var(--_c, var(--accent)) 14%, #fff);
+  color: var(--_c, var(--accent));
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--_c, var(--accent)) 22%, transparent);
+}
+.ibadge .icon { width: 22px; height: 22px; }
+
+/* brand/tool logo tile (real SVG when available, else a colored monogram) */
+.logo {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; border-radius: 9px; overflow: hidden;
+  background: #fff; box-shadow: var(--shadow-sm);
+}
+.logo svg { width: 78%; height: 78%; }
+.logo.mono { background: var(--lc, var(--accent)); color: #fff;
+  font-family: var(--font-display); font-weight: 700; font-size: 13px; letter-spacing: -0.02em; }
+/* compact logos inside chips */
+.chip .logo { width: 18px; height: 18px; border-radius: 5px; box-shadow: none; }
+.chip .logo.mono { font-size: 8.5px; }
+
+/* ---------- Reveal animation hooks (driver in build-html.mjs sets these vars) ---------- */
+.reveal {
+  opacity: var(--rv-o, 1);
+  transform: translate(var(--rv-x, 0), var(--rv-y, 0)) scale(var(--rv-s, 1));
+  transform-origin: center;
+  will-change: opacity, transform;
+}

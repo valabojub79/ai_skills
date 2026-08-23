@@ -1,0 +1,61 @@
+{
+  "template": "comparison",
+  "width": 800,
+  "height": 1000,
+  "title": "Traditional AI vs Agentic AI vs Agentic RAG",
+  "subtitle": "Three ways software thinks, side by side",
+  "author": "Generated with the animated-infographic skill",
+  "footer": "Follow for more AI breakdowns",
+  "theme": {
+    "accent": "#FF5722",
+    "accent2": "#22A06B",
+    "accent3": "#2D7FF9",
+    "bg": "#ffffff",
+    "text": "#1d2330"
+  },
+  "output": {
+    "formats": ["gif", "png", "jpg"],
+    "fps": 12,
+    "durationSec": 3.5,
+    "holdSec": 1.1,
+    "loop": true
+  },
+  "sections": [
+    {
+      "heading": "Traditional AI",
+      "color": "accent",
+      "sub": "Train once, predict forever",
+      "items": [
+        { "icon": "target", "label": "Specify Task", "note": "Fixed objective up front" },
+        { "icon": "database", "label": "Collect Data", "note": "Curated training set" },
+        { "icon": "chart", "label": "Train Model", "note": "Offline optimization" },
+        { "icon": "rocket", "label": "Deploy", "note": "Static once shipped" },
+        { "icon": "check", "label": "Predict", "note": "Same logic every call" }
+      ]
+    },
+    {
+      "heading": "Agentic AI",
+      "color": "accent2",
+      "sub": "Plans, acts, and self-corrects",
+      "items": [
+        { "icon": "target", "label": "Goal", "note": "Open-ended objective" },
+        { "icon": "tools", "label": "Use Tools", "note": "APIs, code, browsers" },
+        { "icon": "refresh", "label": "Iterate", "note": "Loop until solved" },
+        { "icon": "branch", "label": "Decide", "note": "Chooses next step" },
+        { "icon": "trending", "label": "Improve", "note": "Learns from feedback" }
+      ]
+    },
+    {
+      "heading": "Agentic RAG",
+      "color": "accent3",
+      "sub": "Agents grounded in live knowledge",
+      "items": [
+        { "icon": "target", "label": "Goal", "note": "Answer a real question" },
+        { "icon": "search", "label": "Retrieve", "note": "Fetch fresh context" },
+        { "icon": "settings", "label": "Plan Steps", "note": "Multi-hop reasoning" },
+        { "icon": "refresh", "label": "Verify", "note": "Check against sources" },
+        { "icon": "cloud", "label": "Refresh Memory", "note": "Stay up to date" }
+      ]
+    }
+  ]
+}
