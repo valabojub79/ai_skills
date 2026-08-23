@@ -20,3 +20,15 @@ cd skills/animated-infographic
 npm install          # see README for the Chromium note on boxes without `unzip`
 node render.mjs examples/sample-spec.json --out ./out
 ```
+
+### Gallery
+
+Sample outputs from the skill (see [`skills/animated-infographic/gallery/`](skills/animated-infographic/gallery/)):
+
+| Preview | Made with |
+|---|---|
+| ![Roadmap](skills/animated-infographic/gallery/the-ai-agent-engineering-roadmap.gif) | `roadmap` template — connected serpentine journey |
+| ![Data flow](skills/animated-infographic/gallery/blk-mq-mq-deadline.gif) | `dataflow` template — zoned top-down diagram (Linux blk-mq) |
+| ![Decision rule](skills/animated-infographic/gallery/mq-deadline-how-it-works.gif) | `--raw-html` explainer — the mq-deadline decision rule |
+| ![Marble run](skills/animated-infographic/gallery/io-marbles-mq-deadline.gif) | `--raw-html` simulation — I/O requests as marbles through the queues |
+| ![KG vs CG](skills/animated-infographic/gallery/knowledge-graph-vs-context-graph.gif) | `--raw-html` comparison — Knowledge Graph vs Context Graph |
