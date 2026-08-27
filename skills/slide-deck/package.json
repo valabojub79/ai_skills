@@ -1,0 +1,14 @@
+{
+  "name": "slide-deck",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Generate professional, editable .pptx decks (pptxgenjs) that embed animated-infographic GIFs as hero visuals.",
+  "bin": { "slide-deck": "render-deck.mjs" },
+  "scripts": {
+    "demo": "node render-deck.mjs examples/sample-deck.json --out ./out"
+  },
+  "dependencies": {
+    "pptxgenjs": "^4.0.1"
+  }
+}

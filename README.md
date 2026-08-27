@@ -32,3 +32,18 @@ Sample outputs from the skill (see [`skills/animated-infographic/gallery/`](skil
 | ![Decision rule](skills/animated-infographic/gallery/mq-deadline-how-it-works.gif) | `--raw-html` explainer — the mq-deadline decision rule |
 | ![Marble run](skills/animated-infographic/gallery/io-marbles-mq-deadline.gif) | `--raw-html` simulation — I/O requests as marbles through the queues |
 | ![KG vs CG](skills/animated-infographic/gallery/knowledge-graph-vs-context-graph.gif) | `--raw-html` comparison — Knowledge Graph vs Context Graph |
+
+## slide-deck
+
+Generate professional, **editable** `.pptx` decks (via pptxgenjs) that embed **animated-infographic**
+GIFs as hero visuals. Layouts: title, section, bullets, two-column, hero-visual, stat, comparison,
+quote, closing. Reuses the `animated-infographic` skill for the diagrams; no LibreOffice required.
+
+- Setup & usage: [`skills/slide-deck/README.md`](skills/slide-deck/README.md)
+- Full `deck.json` schema & design rules: [`skills/slide-deck/SKILL.md`](skills/slide-deck/SKILL.md)
+
+```bash
+cd skills/slide-deck
+npm install
+node render-deck.mjs examples/sample-deck.json --out ./out
+```

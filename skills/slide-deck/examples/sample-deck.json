@@ -1,0 +1,57 @@
+{
+  "title": "How Linux Schedules I/O",
+  "subtitle": "blk-mq and the mq-deadline scheduler",
+  "author": "slide-deck demo",
+  "theme": {
+    "dominant": "#0B3D91",
+    "supporting": ["#2563EB"],
+    "accent": "#EA580C",
+    "bg": "#FFFFFF",
+    "text": "#0F172A"
+  },
+  "slides": [
+    { "layout": "title", "title": "How Linux Schedules I/O", "subtitle": "blk-mq and the mq-deadline scheduler", "author": "slide-deck demo" },
+
+    { "layout": "section", "title": "The big picture", "notes": "Set up the multi-queue architecture before the algorithm." },
+
+    { "layout": "hero-visual", "title": "One request's journey", "caption": "Requests fan out across per-CPU software queues and the device's hardware queues.",
+      "visual": { "spec": {
+        "template": "dataflow", "animation": "motion", "fps": 18, "durationSec": 1.5,
+        "theme": { "accent": "#EA580C", "accent2": "#2563EB", "accent3": "#059669", "bg": "#ffffff", "text": "#0f172a" },
+        "zones": [
+          { "label": "Software Staging", "tag": "blk_mq_ctx", "color": "accent2",
+            "rows": [ [ { "label": "SW Queue 0", "icon": "cpu", "sub": "per-CPU", "edgeLabel": "per-CPU" }, { "label": "SW Queue 1", "icon": "cpu", "sub": "per-CPU" } ] ] },
+          { "label": "mq-deadline Elevator", "color": "accent",
+            "rows": [ [ { "label": "Merge & Sort", "icon": "layers", "sub": "by LBA + deadline" } ], [ { "label": "Dispatch", "icon": "branch", "sub": "nearest, unless expired" } ] ] },
+          { "label": "Hardware Dispatch", "tag": "blk_mq_hw_ctx", "color": "accent3",
+            "rows": [ [ { "label": "HW Queue 0", "icon": "network" }, { "label": "HW Queue 1", "icon": "network" } ] ] }
+        ]
+      } } },
+
+    { "layout": "bullets", "title": "Why multi-queue (blk-mq)?",
+      "bullets": [
+        "One software queue per CPU — no lock contention between cores",
+        "The device reports how many hardware queues it exposes (NVMe/UFS)",
+        "The I/O scheduler sits in the middle and decides the order",
+        "Scales throughput across fast, parallel storage"
+      ],
+      "notes": "Emphasize: SW queues = #CPUs, HW queues = device-reported." },
+
+    { "layout": "stat", "title": "The trade-off in numbers",
+      "stats": [
+        { "value": "1 / CPU", "label": "software queues — lockless staging" },
+        { "value": "N", "label": "hardware queues — set by the device" },
+        { "value": "0", "label": "requests left to starve — deadlines are enforced" }
+      ] },
+
+    { "layout": "comparison", "title": "Two orderings, tracked at once",
+      "columns": [
+        { "heading": "Sort tree (LBA)", "items": [ "Ordered by disk address", "Fewest seeks", "High throughput", "Default choice" ] },
+        { "heading": "FIFO (deadline)", "items": [ "Ordered by arrival", "Bounds latency", "Overrides when a deadline expires", "Prevents starvation" ] }
+      ] },
+
+    { "layout": "quote", "title": "Sort by address for speed — override on deadline for fairness.", "author": "the mq-deadline rule" },
+
+    { "layout": "closing", "title": "That's mq-deadline", "bullets": [ "Fast by default (nearest address)", "Fair when it must be (deadline override)" ], "source": "kernel.org · block/mq-deadline.c" }
+  ]
+}
